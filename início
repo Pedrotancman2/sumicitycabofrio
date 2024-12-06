@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><strong>Sumicity Cabo Frio Internet<strong></title>
+  <style>
+    /* Reset e estilo base */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Arial', sans-serif;
+    }
+
+    body {
+      background: linear-gradient(to bottom, #f4f4f4, #eaeaea);
+      color: #333;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    header {
+      background: linear-gradient(135deg, #0078d7, #005fa3);
+      color: #fff;
+      width: 100%;
+      padding: 1rem;
+      display: flex;
+      align-items: center;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    header img {
+      max-height: 60px;
+      margin-right: 1rem;
+    }
+
+    header h1 {
+      font-size: 1.8rem;
+      text-align: center;
+      flex-grow: 1;
+    }
+
+    .banner {
+      width: 100%;
+      margin: 1rem 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .banner img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 12px;
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .container {
+      max-width: 1200px;
+      width: 90%;
+      margin: 2rem auto;
+    }
+
+    /* Estilo do carrossel */
+    .carousel {
+      display: flex;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      gap: 1.5rem;
+      padding: 1rem 0;
+    }
+
+    .carousel::-webkit-scrollbar {
+      display: none;
+    }
+
+    /* Cartões de planos */
+    .plan-card {
+      flex: 0 0 300px;
+      background: #fff;
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+      border-radius: 12px;
+      text-align: center;
+      scroll-snap-align: center;
+      position: relative;
+      padding: 2rem;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .plan-card:hover {
+      transform: scale(1.05);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    .plan-card.selected {
+      border: 2px solid #ff9800;
+      box-shadow: 0 0 20px rgba(255, 152, 0, 0.6);
+    }
+
+    .plan-card h2 {
+      font-size: 1.8rem;
+      margin-bottom: 1rem;
+      color: #0078d7;
+    }
+
+    .plan-card p {
+      font-size: 1rem;
+      margin-bottom: 0.5rem;
+      text-align: left;
+    }
+
+    .plan-card .price {
+      font-size: 2rem;
+      color: #0078d7;
+      margin: 1rem 0;
+    }
+
+    .plan-card button {
+      background: linear-gradient(135deg, #0078d7, #005fa3);
+      color: #fff;
+      border: none;
+      padding: 0.75rem 1.5rem;
+      border-radius: 8px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background 0.3s ease, transform 0.3s ease;
+    }
+
+    .plan-card button:hover {
+      background: #00417a;
+      transform: translateY(-2px);
+    }
+
+    .plan-card .offer-badge {
+      position: absolute;
+      top: -10px;
+      left: -10px;
+      background: #ff9800;
+      color: #fff;
+      font-size: 0.9rem;
+      font-weight: bold;
+      padding: 5px 12px;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Botão do WhatsApp */
+    .whatsapp-button {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: #25d366;
+      color: #fff;
+      padding: 12px 18px;
+      border-radius: 50px;
+      font-size: 1rem;
+      font-weight: bold;
+      text-decoration: none;
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .whatsapp-button img {
+      width: 32px;
+      height: 32px;
+    }
+
+    .whatsapp-button:hover {
+      transform: scale(1.1);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Estilo da seção FAQ e Sobre */
+    .faq, .about {
+      background: #fff;
+      width: 100%;
+      max-width: 1200px;
+      padding: 2rem;
+      margin: 2rem 0;
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+      border-radius: 12px;
+    }
+
+    .faq h2, .about h2 {
+      text-align: center;
+      font-size: 2rem;
+      color: #0078d7;
+      margin-bottom: 1.5rem;
+    }
+
+    .faq-item, .about-item {
+      margin-bottom: 1.5rem;
+    }
+
+    .faq-item h3, .about-item h3 {
+      font-size: 1.25rem;
+      color: #333;
+      margin-bottom: 0.5rem;
+    }
+
+    .faq-item p, .about-item p {
+      font-size: 1rem;
+      color: #666;
+      line-height: 1.6;
+    }
+
+    footer {
+      background: linear-gradient(135deg, #0078d7, #005fa3);
+      color: #fff;
+      width: 100%;
+      padding: 1.5rem;
+      text-align: center;
+      margin-top: 2rem;
+      box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    footer p {
+      font-size: 1rem;
+    }
+
+    @media (max-width: 768px) {
+      header h1 {
+        font-size: 1.2rem;
+      }
+
+      header img {
+        max-height: 40px;
+      }
+
+      .carousel {
+        gap: 1rem;
+      }
+
+      .plan-card {
+        flex: 0 0 90%;
+        padding: 1.5rem;
+      }
+
+      .plan-card h2 {
+        font-size: 1.5rem;
+      }
+
+      .plan-card .price {
+        font-size: 1.5rem;
+      }
+
+      .faq h2, .about h2 {
+        font-size: 1.5rem;
+      }
+
+      .faq-item h3, .about-item h3 {
+        font-size: 1.125rem;
+      }
+
+      .whatsapp-button {
+        padding: 10px 15px;
+        font-size: 0.875rem;
+      }
+
+      .whatsapp-button img {
+        width: 28px;
+        height: 28px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <img src="https://via.placeholder.com/150x50.png?text=Logo" alt="Sumicity Cabo Frio Internet">
+    <h1><strong>Sumicity Cabo Frio Internet<strong></h1>
+  </header>
+
+  <div class="banner">
+    <img src="https://via.placeholder.com/1200x300.png?text=Banner+Promocional+Aqui" alt="Sumicity Cabo Frio Internet">
+  </div>
+
+  <div class="container">
+    <div class="carousel">
+      <div class="plan-card best-choice selected"> <!-- Adicionando a classe "selected" -->
+        <div class="offer-badge">Oferta do Mês</div> <!-- Adesivo -->
+        <h2>300 MEGA</h2>
+        <p style="text-align: justify;">✅ Wi-Fi 5G</p>
+        <p style="text-align: justify;">✅️ 300 Mbps de Download</p>
+        <p style="text-align: justify;">✅ 150 Mbps de Upload</p>
+        <p style="text-align: justify;">✅ Instalação Grátis</p>
+        <p style="text-align: justify;">✅ Internet Fibra Óptica</p>
+        <p class="price">R$ 89,99/mês</p>
+        <button>Assinar Agora</button>
+      </div>
+
+      <div class="plan-card">
+        <h2>450 MEGA</h2>
+        <p style="text-align: justify;">✅ Wi-Fi 5G</p>
+        <p style="text-align: justify;">✅ 450 Mbps de Download</p>
+        <p style="text-align: justify;">✅ 225 Mbps de Upload</p>
+        <p style="text-align: justify;">✅ Instalação Grátis</p>
+        <p style="text-align: justify;">✅ Internet Fibra Óptica</p>
+        <p class="price">R$ 69,99/mês</p>
+        <P>Após 3 meses R$79,99</P>
+        <button>Assinar Agora</button>
+      </div>
+
+      <div class="plan-card">
+        <h2>700 MEGA</h2>
+        <p style="text-align: justify;">✅ Wi-Fi 6</p>
+        <p style="text-align: justify;">✅ 700 Mbps de Download</p>
+        <p style="text-align: justify;">✅ 350 Mbps de Upload</p>
+        <p style="text-align: justify;">✅ Instalação Grátis</p>
+        <p style="text-align: justify;">✅ Internet Fibra Óptica</p>
+        <p class="price">R$ 79,99/mês</p>
+        <P>Após 3 meses R$99,99</P>
+        <button>Assinar Agora</button>
+      </div>
+     
+      <div class="plan-card">
+        <h2>800 MEGA</h2>
+        <p style="text-align: justify;">✅ Wi-Fi 6</p>
+        <p style="text-align: justify;">✅ 800 Mbps de Download</p>
+        <p style="text-align: justify;">✅ 400 Mbps de Upload</p>
+        <p style="text-align: justify;">✅ Instalação Grátis</p>
+        <p style="text-align: justify;">✅ Internet Fibra Óptica</p>
+        <p class="price">R$ 99,99/mês</p>
+        <P>Após 3 meses R$199,99</P>
+        <button>Assinar Agora</button>
+      </div>
+
+      <div class="plan-card">
+        <h2>1GB</h2>
+        <p style="text-align: justify;">✅ Wi-Fi 6</p>
+        <p style="text-align: justify;">✅ 920 Mbps de Download</p>
+        <p style="text-align: justify;">✅ 460 Mbps de Upload</p>
+        <p style="text-align: justify;">✅ Instalação Grátis</p>
+        <p style="text-align: justify;">✅ Internet Fibra Óptica</p>
+        <p class="price">R$ 149,99/mês</p>
+        <button>Assinar Agora</button>
+      </div>
+    </div>
+  </div>
+
+  <a href="https://wa.me/5522992219352" target="_blank" class="whatsapp-button">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp">
+    Vendedor Online
+  </a>
+
+  <section class="faq">
+    <h2>Dúvidas Frequentes</h2>
+
+    <div class="faq-item">
+      <h3>1. Como faço para contratar um plano na Sumicity Cabo Frio?</h3>
+      <p>Para você contratar um de nossos planos de internet basta selecionar o plano escolhido clicando em assinar agora e falar com um de nossos vendedores online ou entrar em contato pelo WhatsApp.</p>
+      <p>todos os nossos planos possuem cobertura em toda a cidade de Cabo Frio, além de garantir benefícios exclusivos para quem assina nossa internet aqui na cidade. Somos a melhor internet da cidade de Cabo Frio, garantimos um serviço 100% Fibra Óptica, instalação grátis, primeira fatura para o mês seguinte! Conheça já nossas promoções de internet e fale com um vendendor online!</p>
+    </div>
+
+    <div class="faq-item">
+      <h3>2.Quais os benefícios da Sumicity Cabo Frio Internet?</h3>
+      <p>Ao você assinar um plano de internet aqui na Sumicity Cabo Frio você garante uma lista enorme de benefícios segue abaixo:</p>
+      <p>instalação Grátis, Roteador com sinal Wi-Fi Grátis, Internet 100% Fibra Óptica e a primeira só para o mês seguinte!</p>
+    </div>
+
+    <div class="faq-item">
+      <h3>3. Como consigo suporte técnico e segunda via de Fatura da Sumicity em Cabo Frio?</h3>
+      <p>Para conseguir suporte técnico ou obter a segunda via de fatura da Sumicity em Cabo Frio basta entrar em contato com nosso número de telefone que é 22992219352 atendemos toda a cidade com soluções poderosas.</p>
+    </div>
+   
+     <div class="faq-item">
+      <h3>4. Como consultar a cobertura da Sumicity em cabo Frio?</h3>
+      <p>Para consultar a cobertura é bem simples, basta entrar em contato com o nosso número 22992219352 ou entrar em contato pelo Whatsapp e falar com o vendedor online, atendemos exclusivamente a cidade de Cabo Frio. Nosso time está preparado para informar todos os bairros e locais de forma profissional para a cobertura da sumicity em Cabo Frio. Não perca tempo e fale com o nosso time de especialista na cidade de Cabo Frio para Sumicity Internet!</p>
+         
+  </section>
+
+  <section class="about">
+    <h2>Conheça a Sumicity Cabo Frio Internet</h2>
+
+    <div class="about-item">
+      <h3>Conectar Toda Cidade de Cabo Frio ao Mundo com nossa Internet Fibra Óptica!</h3>
+      <p>Somos a Sumicity Cabo Frio Internet, uma empresa comprometida em atender a cidade com nossa poderosa rede de internet 100% Fibra Óptica, com os melhores planos de internet para cidade. Conectar nossos clientes dentro da Cidade de Cabo Frio ao mundo é nossa maior missão, você pode conhecer nossas promoções através do nosso portifólio de planos com soluções poderosas para quem gosta de jogos ou até mesmo para conectar toda sua casa a uma internet de qualidade! Você também pode conhecer nossos planos para empresa através do contato do Whatsapp! Saiba que aqui na Sumicity em Cabo Frio estamos preparados para solucionar também seus problemas do dia a dia, por isso caso precise de segunda via de fatura ou até mesmo suporte técnico voce pode entrar em contato com o telefone da Sumicity em Cabo Frio ou falar com um representante através do Whatsapp. Não perca tempo e venha para melhor e mais barata internet da Cidade de Cabo Frio, venha para Sumicity em Cabo Frio agora!</p>
+      <p>Ficou com duvida entre em contato com nosso telefone 22992219352 ou falar conosco no Whatsapp</p>
+    </div>
+  </section>
+
+  <footer>
+    <p>&copy; 2024 - Sumicity Cabo Frio internet. Todos os direitos reservados.</p>
+  </footer>
+</body>
+</html>
